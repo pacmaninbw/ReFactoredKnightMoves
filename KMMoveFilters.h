@@ -19,38 +19,38 @@
 #define KMMOVEFILTERS_H_
 
 #include <vector>
-#include "KnightMoves.h"
+#include "KMMethodLimitations.h"
 #include "KMMove.h"
 
 class KMMoveFilters {
 private:
-	std::vector<KMBoardLocation> m_VisitedLocations;
-	std::vector<unsigned int> m_VisitedRows;
-	std::vector<unsigned int> m_VisitedColumns;
-	unsigned int m_SingleSideBoardDimension;
-	KnightMovesMethodLimitations m_PathLimitations;
-	static const KMRandomAccessMoveCollection AllPossibleMoves;
-	// The 8 possible moves the knight can make.
-	static KMMove Left1Up2;
-	static KMMove Left2Up1;
-	static KMMove Left2Down1;
-	static KMMove Left1Down2;
-	static KMMove Right1Up2;
-	static KMMove Right2Up1;
-	static KMMove Right2Down1;
-	static KMMove Right1Down2;
+    std::vector<KMBoardLocation> m_VisitedLocations;
+    std::vector<unsigned int> m_VisitedRows;
+    std::vector<unsigned int> m_VisitedColumns;
+    unsigned int m_SingleSideBoardDimension;
+    KnightMovesMethodLimitations m_PathLimitations;
+    static const KMRandomAccessMoveCollection AllPossibleMoves;
+    // The 8 possible moves the knight can make.
+    static KMMove Left1Up2;
+    static KMMove Left2Up1;
+    static KMMove Left2Down1;
+    static KMMove Left1Down2;
+    static KMMove Right1Up2;
+    static KMMove Right2Up1;
+    static KMMove Right2Down1;
+    static KMMove Right1Down2;
 
 protected:
-	bool IsNotPreviouslyVisited(KMMove Move) const { return IsNotPreviouslyVisited(Move.GetNextLocation()); };
-	bool IsNotPreviouslyVisited(KMBoardLocation Destination) const;
+    bool IsNotPreviouslyVisited(KMMove Move) const { return IsNotPreviouslyVisited(Move.GetNextLocation()); };
+    bool IsNotPreviouslyVisited(KMBoardLocation Destination) const;
 
 public:
-	KMMoveFilters();
-	void ResetFilters(unsigned int BoardDimension, KnightMovesMethodLimitations SlicingMethod) {m_SingleSideBoardDimension = BoardDimension; m_PathLimitations = SlicingMethod; }
-	virtual ~KMMoveFilters() = default;
-	void PushVisited(KMBoardLocation Location);
-	void PopVisited();
-	KMRandomAccessMoveCollection GetPossibleMoves(const KMBoardLocation CurrentLocation) const;
+    KMMoveFilters();
+    void ResetFilters(unsigned int BoardDimension, KnightMovesMethodLimitations SlicingMethod) {m_SingleSideBoardDimension = BoardDimension; m_PathLimitations = SlicingMethod; }
+    virtual ~KMMoveFilters() = default;
+    void PushVisited(KMBoardLocation Location);
+    void PopVisited();
+    KMRandomAccessMoveCollection GetPossibleMoves(const KMBoardLocation CurrentLocation) const;
 };
 
 #endif /* KMMOVEFILTERS_H_ */

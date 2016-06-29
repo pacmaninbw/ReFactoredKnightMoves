@@ -10,8 +10,8 @@
 
 enum KnightMovesMethodLimitations
 {
-	DenyByPreviousRowOrColumn,
-	DenyByPreviousLocation
+    DenyByPreviousRowOrColumn,
+    DenyByPreviousLocation
 };
 
 #endif /* KMKMMETHODlIMITATIONS_H_ */

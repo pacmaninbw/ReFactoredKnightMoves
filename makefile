@@ -14,10 +14,9 @@ EXECUTABLES := KnightMovesRefactored
 # All Target
 all: $(DIRS) $(EXECUTABLES)
 
-# Add inputs and outputs from these tool invocations to the build variables 
 OBJS += $(OBJ_DIR)/KMBoardLocation.o $(OBJ_DIR)/KMMove.o $(OBJ_DIR)/KMMoveFilters.o \
 $(OBJ_DIR)/KMOutputData.o $(OBJ_DIR)/KMPath.o $(OBJ_DIR)/KnightMoves.o \
-$(OBJ_DIR)/KnightMovesImplementation.o 
+$(OBJ_DIR)/KnightMovesImplementation.o $(OBJ_DIR)/TestData.o
 
 obj/%.o: $(SRC_DIR)%.cpp
 	@echo 'Building file: $<'
@@ -26,6 +25,10 @@ obj/%.o: $(SRC_DIR)%.cpp
 #	g++ -std=c++0x -D__cplusplus=201103L -O0 -g3 -Wall -c -o "$@" "$<" # Debug
 	@echo 'Finished building: $<'
 	@echo ' '
+
+obj/TestData.o: $(SRC_DIR)TestData.cpp $(SRC_DIR)TestData.h \
+ $(SRC_DIR)KMMethodLimitations.h $(SRC_DIR)KMBaseData.h \
+ $(SRC_DIR)KMBoardDimensionConstants.h
 
 obj/KMBoardLocation.o: $(SRC_DIR)KMBoardLocation.cpp $(SRC_DIR)KnightMoves.h \
  $(SRC_DIR)KMMethodLimitations.h $(SRC_DIR)KMBaseData.h \

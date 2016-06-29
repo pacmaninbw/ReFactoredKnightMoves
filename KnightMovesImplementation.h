@@ -26,23 +26,23 @@
 
 class KnightMovesImplementation {
 private:
-	KMBoardLocation m_PointOfOrigin;
-	KMBoardLocation m_Destination;
-	unsigned int m_SingleSideBoardDimension;
-	KnightMovesMethodLimitations m_PathLimitations;
-	KMOutputData m_Results;
-	KMMoveFilters m_MoveFilters;
-	KMPath m_Path;
+    KMBoardLocation m_PointOfOrigin;
+    KMBoardLocation m_Destination;
+    unsigned int m_SingleSideBoardDimension;
+    KnightMovesMethodLimitations m_PathLimitations;
+    KMOutputData m_Results;
+    KMMoveFilters m_MoveFilters;
+    KMPath m_Path;
 
 protected:
-	bool CalculatePath(KMMove CurrentMove);		// Recursive function
-	void InitPointOfOrigin(KMBaseData UserData);
-	void InitDestination(KMBaseData UserData);
+    bool CalculatePath(KMMove CurrentMove);	// Recursive function
+    void InitPointOfOrigin(KMBaseData UserData);
+    void InitDestination(KMBaseData UserData);
 
 public:
-	KnightMovesImplementation(KMBaseData UserData);
-	virtual ~KnightMovesImplementation() = default;
-	KMOutputData CalculatePaths();
+    KnightMovesImplementation(KMBaseData UserData);
+    virtual ~KnightMovesImplementation() = default;
+    KMOutputData CalculatePaths();
 };
 
 #endif /* KNIGHTMOVESIMPLEMENTATION_H_ */

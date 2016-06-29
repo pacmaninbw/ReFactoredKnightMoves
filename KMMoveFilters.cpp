@@ -48,62 +48,62 @@ const KMRandomAccessMoveCollection KMMoveFilters::AllPossibleMoves{
 
 KMRandomAccessMoveCollection KMMoveFilters::GetPossibleMoves(const KMBoardLocation CurrentLocation) const
 {
-	KMRandomAccessMoveCollection PossibleMoves;
-	for (auto PossibeMove : AllPossibleMoves) {
-		PossibeMove.SetBoardDimension(m_SingleSideBoardDimension);
-		PossibeMove.SetOriginCalculateDestination(CurrentLocation);
-		if ((PossibeMove.IsValid()) && (IsNotPreviouslyVisited(PossibeMove))) {
-			PossibleMoves.push_back(PossibeMove);
-		}
-	}
-	return PossibleMoves;
+    KMRandomAccessMoveCollection PossibleMoves;
+    for (auto PossibeMove : AllPossibleMoves) {
+        PossibeMove.SetBoardDimension(m_SingleSideBoardDimension);
+        PossibeMove.SetOriginCalculateDestination(CurrentLocation);
+        if ((PossibeMove.IsValid()) && (IsNotPreviouslyVisited(PossibeMove))) {
+            PossibleMoves.push_back(PossibeMove);
+        }
+    }
+    return PossibleMoves;
 }
 
 bool KMMoveFilters::IsNotPreviouslyVisited(KMBoardLocation PossibleDestination) const
 {
-	bool NotPrevioslyVisited = true;
+    bool NotPrevioslyVisited = true;
 
-	if (!m_VisitedLocations.empty()) {	// This is always a test, we can't move backwards
-		if (std::find(m_VisitedLocations.begin(), m_VisitedLocations.end(), PossibleDestination)
-			!= m_VisitedLocations.end()) {
-			NotPrevioslyVisited = false;
-		}
-	}
+    if (!m_VisitedLocations.empty()) {    // This is always a test, we can't move backwards
+        if (std::find(m_VisitedLocations.begin(), m_VisitedLocations.end(), PossibleDestination)
+            != m_VisitedLocations.end()) {
+            NotPrevioslyVisited = false;
+        }
+    }
 
-	switch (m_PathLimitations) {
-	default :
-		throw std::runtime_error("KMPath::CheckMoveAgainstPreviousLocations : Unknown type of Path Limitation.");
-	case DenyByPreviousLocation :
-		// Always tested above.
-		break;
-	case DenyByPreviousRowOrColumn:
-		if ((!m_VisitedRows.empty()) && (!m_VisitedColumns.empty())) {
-			unsigned int PossibleRow = PossibleDestination.GetRow();
-			if (std::find(m_VisitedRows.begin(), m_VisitedRows.end(), PossibleRow) != m_VisitedRows.end()) {
-				NotPrevioslyVisited = false;
-				break;
-			}
-			unsigned int PossibleColum = PossibleDestination.GetColumn();
-			if (std::find(m_VisitedColumns.begin(), m_VisitedColumns.end(), PossibleColum) != m_VisitedColumns.end()) {
-				NotPrevioslyVisited = false;
-			}
-		}
-		break;
-	}
+    switch (m_PathLimitations) {
+    default :
+        throw std::runtime_error("KMPath::CheckMoveAgainstPreviousLocations : Unknown type of Path Limitation.");
+    case DenyByPreviousLocation :
+        // Always tested above.
+        break;
+    case DenyByPreviousRowOrColumn:
+        if ((!m_VisitedRows.empty()) && (!m_VisitedColumns.empty())) {
+            unsigned int PossibleRow = PossibleDestination.GetRow();
+            if (std::find(m_VisitedRows.begin(), m_VisitedRows.end(), PossibleRow) != m_VisitedRows.end()) {
+                NotPrevioslyVisited = false;
+                break;
+            }
+            unsigned int PossibleColum = PossibleDestination.GetColumn();
+            if (std::find(m_VisitedColumns.begin(), m_VisitedColumns.end(), PossibleColum) != m_VisitedColumns.end()) {
+                NotPrevioslyVisited = false;
+            }
+        }
+        break;
+    }
 
-	return NotPrevioslyVisited;
+    return NotPrevioslyVisited;
 }
 
 void KMMoveFilters::PushVisited(KMBoardLocation Location)
 {
-	m_VisitedRows.push_back(Location.GetRow());
-	m_VisitedColumns.push_back(Location.GetColumn());
-	m_VisitedLocations.push_back(Location);
+    m_VisitedRows.push_back(Location.GetRow());
+    m_VisitedColumns.push_back(Location.GetColumn());
+    m_VisitedLocations.push_back(Location);
 }
 
 void KMMoveFilters::PopVisited()
 {
-	m_VisitedRows.pop_back();
-	m_VisitedColumns.pop_back();
-	m_VisitedLocations.pop_back();
+    m_VisitedRows.pop_back();
+    m_VisitedColumns.pop_back();
+    m_VisitedLocations.pop_back();
 }

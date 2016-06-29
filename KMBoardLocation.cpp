@@ -5,11 +5,11 @@
  *	  Author: pacmaninbw
  */
 
-#include "KnightMoves.h"
 #include <stdio.h>
 #include <string>
 #include <stdexcept>
 #include "KMBoardLocation.h"
+#include "KMMethodLimitations.h"
 #include "KMBoardDimensionConstants.h"
 
 const int ExceptionMessageBufferSize = 1024;
@@ -18,17 +18,17 @@ const int ExceptionMessageBufferSize = 1024;
 KMBoardLocation::KMBoardLocation()
 : m_Row{0}, m_Column{0}, m_BoardDimension{DefaultBoardDimensionOnOneSide}
 {
-	m_Name = "";
+    m_Name = "";
 }
 
 KMBoardLocation::KMBoardLocation(unsigned int Row, unsigned int Column, unsigned int BoardSingleSideDimension)
  : m_Row{Row}, m_Column{Column}, m_BoardDimension{BoardSingleSideDimension}
 {
-	if (((m_Row < MinimumBoardLocationValue)|| (m_Row > m_BoardDimension)) ||
-		((m_Column < MinimumBoardLocationValue) || (m_Column > m_BoardDimension))) {
-		ThrowBoundsException("KMBoardLocation::KMBoardLocation");
-	}
-	MakeName();
+    if (((m_Row < MinimumBoardLocationValue)|| (m_Row > m_BoardDimension)) ||
+        ((m_Column < MinimumBoardLocationValue) || (m_Column > m_BoardDimension))) {
+        ThrowBoundsException("KMBoardLocation::KMBoardLocation");
+    }
+    MakeName();
 }
 
 /**
@@ -37,50 +37,55 @@ KMBoardLocation::KMBoardLocation(unsigned int Row, unsigned int Column, unsigned
  */
 void KMBoardLocation::MakeName()
 {
-	const unsigned int RowCStrSize = 2; // Enough for a null terminated string of 1 character
-	const unsigned int RowCharacterPosition = 0;
-	const unsigned int RowNullTerminatorPosition = 1;
+    const unsigned int RowCStrSize = 2; // Enough for a null terminated string of 1 character
+    const unsigned int RowCharacterPosition = 0;
+    const unsigned int RowNullTerminatorPosition = 1;
 
-	if (((m_Row < MinimumBoardLocationValue)|| (m_Row > m_BoardDimension)) ||
-		((m_Column < MinimumBoardLocationValue) || (m_Column > m_BoardDimension))) {
-		ThrowBoundsException("KMBoardLocation::MakeName()");
-	}
+    if (m_Name.size() >= 2)
+    {
+        return;
+    }
 
-	char RowCStr[RowCStrSize];
-	RowCStr[RowCharacterPosition] = ('A' + (m_Row - 1));
-	RowCStr[RowNullTerminatorPosition] = '\0';
+    if (((m_Row < MinimumBoardLocationValue)|| (m_Row > m_BoardDimension)) ||
+        ((m_Column < MinimumBoardLocationValue) || (m_Column > m_BoardDimension))) {
+        ThrowBoundsException("KMBoardLocation::MakeName()");
+    }
 
-	std::string tempRow(RowCStr);
-	std::string tempColumn = std::to_string(m_Column);
-	m_Name = tempRow + tempColumn;
+    char RowCStr[RowCStrSize];
+    RowCStr[RowCharacterPosition] = ('A' + (m_Row - 1));
+    RowCStr[RowNullTerminatorPosition] = '\0';
+
+    std::string tempRow(RowCStr);
+    std::string tempColumn = std::to_string(m_Column);
+    m_Name = tempRow + tempColumn;
 }
 
 void KMBoardLocation::ThrowBoundsException(const char *CallingFunction)
 {
-	char estrbuff[ExceptionMessageBufferSize];
-	sprintf(estrbuff, "%s value out of range (%d to %d) : ", CallingFunction, MinimumBoardLocationValue, m_BoardDimension);
-	std::string EMessage(estrbuff);
-	sprintf(estrbuff, "Row = %d, Column = %d", m_Row, m_Column);
-	EMessage.append(estrbuff);
-	throw std::runtime_error(EMessage);
+    char estrbuff[ExceptionMessageBufferSize];
+    sprintf(estrbuff, "%s value out of range (%d to %d) : ", CallingFunction, MinimumBoardLocationValue, m_BoardDimension);
+    std::string EMessage(estrbuff);
+    sprintf(estrbuff, "Row = %d, Column = %d", m_Row, m_Column);
+    EMessage.append(estrbuff);
+    throw std::runtime_error(EMessage);
 }
 
 bool KMBoardLocation::IsValid() const
 {
-	bool ValidLocation = true;
-	if (!IsSet())
-	{
-		ValidLocation = false;
-	}
-	else
-	{
-		if ((m_Row < MinimumBoardLocationValue)|| (m_Row > m_BoardDimension)) {
-			ValidLocation = false;
-		}
-		if ((m_Column < MinimumBoardLocationValue)|| (m_Column > m_BoardDimension)) {
-			ValidLocation = false;
-		}
-	}
+    bool ValidLocation = true;
+    if (!IsSet())
+    {
+        ValidLocation = false;
+    }
+    else
+    {
+        if ((m_Row < MinimumBoardLocationValue)|| (m_Row > m_BoardDimension)) {
+            ValidLocation = false;
+        }
+        if ((m_Column < MinimumBoardLocationValue)|| (m_Column > m_BoardDimension)) {
+            ValidLocation = false;
+        }
+    }
 
-	return ValidLocation;
+    return ValidLocation;
 }

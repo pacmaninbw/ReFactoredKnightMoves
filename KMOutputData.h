@@ -21,39 +21,41 @@
 
 class KMOutputData {
 private:
-	KMBoardLocation m_Origin;
-	KMBoardLocation m_Destination;
-	unsigned int m_BoardDimension;
-	std::vector<KMPath> m_PathRecords;
-	unsigned int m_AttemptedPaths;
-	KnightMovesMethodLimitations m_LimitationsOnMoves;
-	bool m_ShowPathData;
+    KMBoardLocation m_Origin;
+    KMBoardLocation m_Destination;
+    unsigned int m_BoardDimension;
+    std::vector<KMPath> m_PathRecords;
+    unsigned int m_AttemptedPaths;
+    KnightMovesMethodLimitations m_LimitationsOnMoves;
+    bool m_ShowPathData;
 protected:
-	void OutputSlicingMethodlogy();
+    void OutputSlicingMethodlogy();
+    void FormattingPathResults();
 
 public:
-	KMOutputData();
-	virtual ~KMOutputData() = default;
-	void IncrementAttemptedPaths() { m_AttemptedPaths++; }
-	void AddPath(const KMPath PathData) { m_PathRecords.push_back(PathData); }
-	int GetPathCount() const { return m_PathRecords.size(); }
-	std::vector<KMPath> GetAllPaths() const { return m_PathRecords; }
-	unsigned int GetAttempts() const { return m_AttemptedPaths; }
-	void SetPointOfOrigin(KMBoardLocation Origin) { m_Origin = Origin; }
-	KMBoardLocation GetPointOfOrigin() { return m_Origin; }
-	void SetDestination(KMBoardLocation Destination) { m_Destination = Destination; }
-	KMBoardLocation GetDestination() { return m_Destination; }
-	void SetBoardDimension(unsigned int BoardDimension) { m_BoardDimension = BoardDimension; }
-	unsigned int GetBoardDimension() const { return m_BoardDimension; }
-	// Statistics on the returned paths.
-	void ShowStats();
-	double Average(std::vector<double> PathLengths);
-	void SetSlicingMethod(KnightMovesMethodLimitations Limitations) { m_LimitationsOnMoves = Limitations; }
-	KnightMovesMethodLimitations GetSlicingMethod() { return m_LimitationsOnMoves; }
-	void DontShowPathData() { m_ShowPathData = false; }
-	void ShowPathData() { m_ShowPathData = true; }
-	bool GetShowPathData() const { return m_ShowPathData; }
-	void ShowResults();
+    KMOutputData();
+    virtual ~KMOutputData() = default;
+    void IncrementAttemptedPaths() { m_AttemptedPaths++; }
+    void AddPath(const KMPath PathData) { m_PathRecords.push_back(PathData); }
+    int GetPathCount() const { return m_PathRecords.size(); }
+    std::vector<KMPath> GetAllPaths() const { return m_PathRecords; }
+    unsigned int GetAttempts() const { return m_AttemptedPaths; }
+    void SetPointOfOrigin(KMBoardLocation Origin) { m_Origin = Origin; }
+    KMBoardLocation GetPointOfOrigin() { return m_Origin; }
+    void SetDestination(KMBoardLocation Destination) { m_Destination = Destination; }
+    KMBoardLocation GetDestination() { return m_Destination; }
+    void SetBoardDimension(unsigned int BoardDimension) { m_BoardDimension = BoardDimension; }
+    unsigned int GetBoardDimension() const { return m_BoardDimension; }
+    // Statistics on the returned paths.
+    void ShowStats();
+    double Average(std::vector<double> PathLengths);
+    void SetSlicingMethod(KnightMovesMethodLimitations Limitations) { m_LimitationsOnMoves = Limitations; }
+    KnightMovesMethodLimitations GetSlicingMethod() { return m_LimitationsOnMoves; }
+    void DontShowPathData() { m_ShowPathData = false; }
+    void ShowPathData() { m_ShowPathData = true; }
+    void ShowPathData(bool Enabled) { m_ShowPathData = Enabled; }
+    bool GetShowPathData() const { return m_ShowPathData; }
+    void ShowResults();
 };
 
 #endif /* KMOUTPUTDATA_H_ */
