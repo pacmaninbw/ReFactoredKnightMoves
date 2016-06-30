@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     int status = 0;
     bool ShowPaths = false;
     KMTestData TestData;
-    std::vector<KMBaseData>TestCases = TestData.LetUserEnterTestCaseNumber();
+    TestCaseList TestCases = TestData.LetUserSelectTestCases();
 
     if (TestCases.empty())
     {

@@ -1,8 +1,8 @@
 /*
  * TestData.h
  *
- *  Created on: Jun 29, 2016
- *      Author: pacmaninbw
+ *  Created on: Jun 30, 2016
+ *      Author: pacman
  */
 
 #ifndef TESTDATA_H_
@@ -12,14 +12,18 @@
 #include "KMMethodLimitations.h"
 #include "KMBaseData.h"
 
+typedef std::vector<KMBaseData> TestCaseList;
+
 class KMTestData {
 private:
-    std::vector<KMBaseData> AllTestCases;
+    TestCaseList AllTestCases;
 
 public:
     KMTestData();
     virtual ~KMTestData() = default;
-    std::vector<KMBaseData> LetUserEnterTestCaseNumber();
+    TestCaseList LetUserSelectTestCases();
+    void PrintAllTestCases();
+    void PrintTestCases(TestCaseList TestCases);
 };
 
 #endif /* TESTDATA_H_ */

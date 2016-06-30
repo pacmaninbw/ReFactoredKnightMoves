@@ -5,6 +5,7 @@
  *      Author: pacmaninbw
  */
 
+#include <algorithm>
 #include "KMBoardDimensionConstants.h"
 #include "TestData.h"
 
@@ -25,11 +26,10 @@ KMTestData::KMTestData() {
     AllTestCases.push_back({1,3, "A3", 2,5, "B5", MaximumBoardDimension, DenyByPreviousRowOrColumn});	// Minimum should be one move
 }
 
-std::vector<KMBaseData> KMTestData::LetUserEnterTestCaseNumber()
+TestCaseList KMTestData::LetUserSelectTestCases()
 {
-    std::vector<KMBaseData> TestCases;
+    TestCaseList TestCases;
     int i = 1;
-    size_t Choice = -1;
 
     std::cout << "Select the number of the test case you want to run or -1 to exit.\n";
     std::cout << "Test" << "\tStart" << "\tTarget" << "\tBoard" << "\tSlicing" << "\n";
@@ -42,6 +42,7 @@ std::vector<KMBaseData> KMTestData::LetUserEnterTestCaseNumber()
             << MaximumBoardDimension <<  " or Slicing Method is Can't return to previous location" << "\n";
     std::cout << ++i <<"\tAll of the above (Go get lunch)\n";
 
+    size_t Choice = -1;
     std::cin >> Choice;
 
     if ((Choice > 0) && (Choice <= AllTestCases.size() + 2)) {
@@ -52,21 +53,33 @@ std::vector<KMBaseData> KMTestData::LetUserEnterTestCaseNumber()
         {
             if (Choice == (AllTestCases.size() + 1))
             { // Run all test cases that definitely execute in finite time.
-                for (auto TestCase: AllTestCases)
-                {
-                    if ((TestCase.m_LimitationsOnMoves != DenyByPreviousLocation) &&
-                            (TestCase.m_DimensionOneSide != MaximumBoardDimension))
-                    {
-                        TestCases.push_back(TestCase);
-                    }
-                }
+                AllTestCases.erase(std::remove_if(AllTestCases.begin(),AllTestCases.end(),
+                        [](KMBaseData TestCase){ return (TestCase.m_LimitationsOnMoves == DenyByPreviousLocation); }));
+                AllTestCases.erase(std::remove_if(AllTestCases.begin(),AllTestCases.end(),
+                        [](KMBaseData TestCase){ return (TestCase.m_DimensionOneSide == MaximumBoardDimension); }));
             }
-            else
-            {
-                TestCases = AllTestCases;
-            }
+            TestCases = AllTestCases;
         }
     }
 
     return TestCases;
 }
+
+void KMTestData::PrintAllTestCases()
+{
+    for (auto TestCase: AllTestCases)
+    {
+        std::cout << TestCase;
+    }
+    std::cout << std::endl;
+}
+
+void KMTestData::PrintTestCases(TestCaseList TestCases)
+{
+    for (auto TestCase: TestCases)
+    {
+        std::cout << TestCase;
+    }
+    std::cout << std::endl;
+}
+
