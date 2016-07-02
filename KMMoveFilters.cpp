@@ -46,6 +46,14 @@ const KMRandomAccessMoveCollection KMMoveFilters::AllPossibleMoves{
     Right1Down2,
 };
 
+void KMMoveFilters::ResetFilters(KMBoardLocation Origin ,unsigned int BoardDimension, KnightMovesMethodLimitations SlicingMethod)
+{
+    m_SingleSideBoardDimension = BoardDimension;
+    m_PathLimitations = SlicingMethod;
+    // Prevent returning to the point of origin.
+    m_VisitedLocations.push_back(Origin);
+}
+
 KMRandomAccessMoveCollection KMMoveFilters::GetPossibleMoves(const KMBoardLocation CurrentLocation) const
 {
     KMRandomAccessMoveCollection PossibleMoves;

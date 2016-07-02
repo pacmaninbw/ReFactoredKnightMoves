@@ -41,7 +41,7 @@ KnightMovesImplementation::KnightMovesImplementation(KMBaseData UserInputData)
 {
     InitPointOfOrigin(UserInputData);
     InitDestination(UserInputData);
-    m_MoveFilters.ResetFilters(static_cast<unsigned int>(UserInputData.m_DimensionOneSide), UserInputData.m_LimitationsOnMoves);
+    m_MoveFilters.ResetFilters(m_PointOfOrigin ,static_cast<unsigned int>(UserInputData.m_DimensionOneSide), UserInputData.m_LimitationsOnMoves);
     m_Results.SetPointOfOrigin(m_PointOfOrigin);
     m_Results.SetDestination(m_Destination);
     m_Results.SetBoardDimension(m_SingleSideBoardDimension);

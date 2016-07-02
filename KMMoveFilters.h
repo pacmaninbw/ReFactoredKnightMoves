@@ -46,7 +46,7 @@ protected:
 
 public:
     KMMoveFilters();
-    void ResetFilters(unsigned int BoardDimension, KnightMovesMethodLimitations SlicingMethod) {m_SingleSideBoardDimension = BoardDimension; m_PathLimitations = SlicingMethod; }
+    void ResetFilters(KMBoardLocation Origin, unsigned int BoardDimension, KnightMovesMethodLimitations SlicingMethod);
     virtual ~KMMoveFilters() = default;
     void PushVisited(KMBoardLocation Location);
     void PopVisited();

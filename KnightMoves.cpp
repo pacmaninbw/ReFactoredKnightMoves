@@ -17,6 +17,14 @@
 #include "KnightMovesImplementation.h"
 #include "KMBoardDimensionConstants.h"
 
+bool EnableShowPaths(void)
+{
+    std::cout << "\nDo you want to show all the resulting paths? ('y' or 'n')\n";
+    char YesOrNo;
+    std::cin >> YesOrNo;
+    return (std::tolower(YesOrNo) == 'y');
+}
+
 double Average(std::vector<double> TestTimes)
 {
     double AverageTestTime = 0.0;
@@ -86,10 +94,7 @@ int main(int argc, char *argv[])
         return status;
     }
 
-    std::cout << "\nDo you want to show all the resulting paths? ('y' or 'n')\n";
-    char YesOrNo;
-    std::cin >> YesOrNo;
-    ShowPaths = (std::tolower(YesOrNo) == 'y');
+    ShowPaths = EnableShowPaths();
 
     try {
         std::vector<double> TestTimes;
