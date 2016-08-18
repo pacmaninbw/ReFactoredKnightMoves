@@ -31,11 +31,14 @@ double Average(std::vector<double> TestTimes)
     double SumOfTestTimes = 0.0;
     int CountOfTestTimes = 0;
 
+    std::cout << "\n";
     for (auto TestTimesIter : TestTimes)
     {
         SumOfTestTimes += TestTimesIter;
         CountOfTestTimes++;
+        std::cout << TestTimesIter << " ";
     }
+    std::cout <<  "SumOfTestTimes = " << SumOfTestTimes << " CountOfTestTimes = " << CountOfTestTimes << "\n";
 
     if (CountOfTestTimes) { // Prevent division by zero.
         AverageTestTime = SumOfTestTimes / static_cast<double>(CountOfTestTimes);
@@ -51,13 +54,12 @@ void OutputOverAllStatistics(std::vector<double> TestTimes)
         return;
     }
 
-    std::cout << std::endl << "Overall Results" << std::endl;
-    std::cout << "The average execution time is " << Average(TestTimes) << " seconds" << std::endl;
-    std::nth_element(TestTimes.begin(), TestTimes.begin() + TestTimes.size()/2, TestTimes.end());
-    std::cout << "The median execution time is " << TestTimes[TestTimes.size()/2] << " seconds" << std::endl;
-    std::nth_element(TestTimes.begin(), TestTimes.begin()+1, TestTimes.end(), std::greater<int>());
-    std::cout << "The longest execution time is " << TestTimes[0] << " seconds" << std::endl;
-    std::nth_element(TestTimes.begin(), TestTimes.begin()+1, TestTimes.end(), std::less<int>());
+    std::sort(TestTimes.begin(), TestTimes.end());
+    double average = Average(TestTimes);
+    std::cout << "\n" << "Overall Results" << "\n";
+    std::cout << "The average execution time is " << average << " seconds" << "\n";
+    std::cout << "The median execution time is " << TestTimes[TestTimes.size()/2] << " seconds" << "\n";
+    std::cout << "The longest execution time is " << TestTimes[TestTimes.size()-1] << " seconds" << "\n";
     std::cout << "The shortest execution time is " << TestTimes[0] << " seconds" << std::endl;
 }
 
